@@ -8,6 +8,7 @@ local L = addonTable.L
 local _
 
 addon.optionsFrame = {}
+addon.optionsCategory = nil
 local options = nil
 
 addon.sellButton = CreateFrame("Button", nil, MerchantFrame, "UIPanelButtonTemplate")
@@ -22,18 +23,16 @@ addon.sellButton:SetText(L["Sell Junk"])
 addon.sellButton:SetScript("OnClick", function() SellJunk:Sell() end)
 
 -- upvalues
-local floor = floor
-local mod = mod
 local string_find = string.find
 local pairs = pairs
 local wipe = wipe
 local DeleteCursorItem = DeleteCursorItem
-local GetContainerItemInfo = GetContainerItemInfo
-local GetItemInfo = GetItemInfo
-local PickupContainerItem = (C_Container.PickupContainerItem or PickupContainerItem)
-local PickupMerchantItem = (C_Container.PickupMerchantItem or PickupMerchantItem)
-local GetContainerNumSlots = (C_Container.GetContainerNumSlots or GetContainerNumSlots)
-local GetContainerItemLink = (C_Container.GetContainerItemLink or GetContainerItemLink)
+local GetItemInfo = C_Item.GetItemInfo
+local PickupMerchantItem = PickupMerchantItem
+local PickupContainerItem = C_Container.PickupContainerItem
+local GetContainerNumSlots = C_Container.GetContainerNumSlots
+local GetContainerItemLink = C_Container.GetContainerItemLink
+local GetContainerItemInfo = C_Container.GetContainerItemInfo
 
 
 function addon:OnInitialize()
@@ -56,7 +55,7 @@ function addon:OnInitialize()
 
 	self:PopulateOptions()
 	AceConfigRegistry:RegisterOptionsTable("SellJunk", options)
-	addon.optionsFrame = AceConfigDialog:AddToBlizOptions("SellJunk", nil, nil, "general")
+	addon.optionsFrame, addon.optionsCategory = AceConfigDialog:AddToBlizOptions("SellJunk", nil, nil, "general")
 end
 
 function addon:OnEnable()
@@ -90,8 +89,8 @@ function addon:Sell()
 			local item = GetContainerItemLink(bag, slot)
 
 			if self:CheckItemIsJunk(item, bag, slot) then
-				currPrice = (select(11, GetItemInfo(item)) or 0) *
-					(GetContainerItemInfo and select(2, GetContainerItemInfo(bag, slot)) or C_Container.GetContainerItemInfo(bag, slot).stackCount)
+				local stackCount = GetContainerItemInfo(bag, slot).stackCount
+				currPrice = (select(11, GetItemInfo(item)) or 0) * stackCount
 				-- this should get rid of problems with grey items, that cant be sell to a vendor
 				if currPrice > 0 then
 					addon:AddProfit(currPrice)
@@ -330,10 +329,7 @@ function addon:HandleSlashCommands(input)
 			self:Rem(arg2, true)
 		end
 	else
-		-- function InterfaceOptionsFrame_OpenToCategory deprecated
-		-- InterfaceOptionsFrame_OpenToCategory(addon.optionsFrame)
-
-		Settings.OpenToCategory("SellJunk")
+		Settings.OpenToCategory(addon.optionsCategory)
 	end
 end
 
