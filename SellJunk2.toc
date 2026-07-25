@@ -1,0 +1,23 @@
+## Interface: 120007
+## Title: SellJunk2
+## Renovator: github.com/hutcho
+## Notes: Sells all junk in your inventory at once.
+## Author: CrazyBenny of Stormrage-EU, FanUpdate by ImJayc2, TravisSpomer and Shyde
+## Version: 4
+## IconTexture: 133784
+## Category: Inventory
+
+
+## SavedVariables: SellJunkDB
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+libs\AceAddon-3.0\AceAddon-3.0.xml
+libs\AceEvent-3.0\AceEvent-3.0.xml
+libs\AceDB-3.0\AceDB-3.0.xml
+libs\AceConsole-3.0\AceConsole-3.0.xml
+libs\AceGUI-3.0\AceGUI-3.0.xml
+libs\AceConfig-3.0\AceConfig-3.0.xml
+
+locales.lua
+SellJunk.lua
