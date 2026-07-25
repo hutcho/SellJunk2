@@ -3,6 +3,7 @@ local L = {}
 addonTable.L = L
 
 L["<Item Link>"] = "<Item Link>"
+L["<Item Link> or <Item ID>"] = "<Item Link> or <Item ID>"
 L["Add item"] = "Add item"
 L["Added"] = "Added"
 L["Automatically sell junk"] = "Automatically sell junk"
@@ -11,8 +12,8 @@ L["Clear exceptions"] = "Clear exceptions"
 L["Command accepts only itemlinks."] = "Command accepts only itemlinks."
 L["copper"] = "copper"
 L["Destroyed"] = "Destroyed"
-L["Drag item into this window to add/remove it from exception list"] =
-"Drag item into this window to add/remove it from exception list"
+L["Shift-click an item to link it, or type an item ID number, then press Enter."] =
+"Shift-click an item to link it, or type an item ID number, then press Enter."
 L["Exceptions"] = "Exceptions"
 L["Exceptions succesfully cleared."] = "Exceptions succesfully cleared."
 L["Gained"] = "Gained"
@@ -33,7 +34,7 @@ L["This is failsafe mode. Will sell only 12 items in one pass. In case of an err
 "This is failsafe mode. Will sell only 12 items in one pass. In case of an error, all items can be bought back from vendor."
 L["Toggles the automatic selling of junk when the merchant window is opened."] =
 "Toggles the automatic selling of junk when the merchant window is opened."
-L["Sell/destroy unbound grey gear (BoE)"] = "Sell/destroy unbound grey gear (BoE)"
+L["Sell/destroy BoE grey gear"] = "Sell/destroy BoE grey gear"
 L["Grey armor and weapons that can still be traded or sold to another player (Bind on Equip) are normally kept. Enable this to sell/destroy them too."] =
 "Grey armor and weapons that can still be traded or sold to another player (Bind on Equip) are normally kept. Enable this to sell/destroy them too."
 L["Available commands (/sj or /selljunk):"] = "Available commands (/sj or /selljunk):"
@@ -43,6 +44,7 @@ L["Add an item to the exception list."] = "Add an item to the exception list."
 L["Remove an item from the exception list."] = "Remove an item from the exception list."
 L["Exception list"] = "Exception list"
 L["No exceptions."] = "No exceptions."
+L["No item found for ID"] = "No item found for ID"
 
 
 if GetLocale() == "ptBR" then

@@ -203,6 +203,13 @@ function addon:Add(link)
 	-- remove all trailing whitespace
 	link = strtrim(link)
 
+	-- a bare number is treated as an item ID and resolved to an itemlink first
+	local itemID = link:match("^%d+$")
+	if itemID then
+		self:AddByItemID(tonumber(itemID))
+		return
+	end
+
 	-- extract name from an itemlink
 	--local found, _, name = string_find(link, "^|c%x+|H.+|h.(.*)\].+")
 	local found, _, name = string_find(link, "^|cnIQ%d:|H.+|h.(.*)\].+")
@@ -225,9 +232,28 @@ function addon:Add(link)
 	AceConfigRegistry:NotifyChange("SellJunk")
 end
 
+function addon:AddByItemID(itemID)
+	if not C_Item.DoesItemExistByID(itemID) then
+		self:Print(L["No item found for ID"] .. ": " .. itemID)
+		return
+	end
+
+	local item = Item:CreateFromItemID(itemID)
+	item:ContinueOnItemLoad(function()
+		addon:Add(item:GetItemLink())
+	end)
+end
+
 function addon:Rem(link)
 	-- remove all trailing whitespace
 	link = strtrim(link)
+
+	-- a bare number is treated as an item ID and resolved to an itemlink first
+	local itemID = link:match("^%d+$")
+	if itemID then
+		self:RemByItemID(tonumber(itemID))
+		return
+	end
 
 	-- extract name from an itemlink
 	--local isLink, _, name = string_find(link, "^|c%x+|H.+|h.(.*)\].+")
@@ -270,6 +296,18 @@ function addon:Rem(link)
 			break
 		end
 	end
+end
+
+function addon:RemByItemID(itemID)
+	if not C_Item.DoesItemExistByID(itemID) then
+		self:Print(L["No item found for ID"] .. ": " .. itemID)
+		return
+	end
+
+	local item = Item:CreateFromItemID(itemID)
+	item:ContinueOnItemLoad(function()
+		addon:Rem(item:GetItemLink())
+	end)
 end
 
 function addon:isException(link)
@@ -466,13 +504,13 @@ function addon:PopulateOptions()
 						note1 = {
 							order = 15,
 							type  = "description",
-							name  = L["Drag item into this window to add/remove it from exception list"],
+							name  = L["Shift-click an item to link it, or type an item ID number, then press Enter."],
 						},
 						add = {
 							order = 16,
 							type  = "input",
 							name  = L["Add item"] .. ':',
-							usage = L["<Item Link>"],
+							usage = L["<Item Link> or <Item ID>"],
 							get   = false,
 							set   = function(info, v) addon:Add(v) end,
 						},
@@ -480,7 +518,7 @@ function addon:PopulateOptions()
 							order = 17,
 							type  = "input",
 							name  = L["Remove item"] .. ':',
-							usage = L["<Item Link>"],
+							usage = L["<Item Link> or <Item ID>"],
 							get   = false,
 							set   = function(info, v) addon:Rem(v) end,
 						},
