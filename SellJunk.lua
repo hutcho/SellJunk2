@@ -222,6 +222,7 @@ function addon:Add(link)
 	-- append name of the item to global exception list
 	exceptions[#exceptions + 1] = name
 	self:Print(L["Added"] .. ": " .. link)
+	AceConfigRegistry:NotifyChange("SellJunk")
 end
 
 function addon:Rem(link)
@@ -265,6 +266,7 @@ function addon:Rem(link)
 				exceptions[k] = nil
 			end
 			self:Print(L["Removed"] .. ": " .. link)
+			AceConfigRegistry:NotifyChange("SellJunk")
 			break
 		end
 	end
@@ -307,9 +309,25 @@ function addon:isException(link)
 	return false
 end
 
+function addon:GetExceptionListText()
+	local exceptions = self.db.global.exceptions
+	local lines = {}
+	for _, v in pairs(exceptions) do
+		lines[#lines + 1] = v
+	end
+
+	if #lines == 0 then
+		return L["No exceptions."]
+	end
+
+	table.sort(lines)
+	return table.concat(lines, "\n")
+end
+
 function addon:ClearDB()
 	wipe(self.db.global.exceptions)
 	self:Print(L["Exceptions succesfully cleared."])
+	AceConfigRegistry:NotifyChange("SellJunk")
 end
 
 function addon:HandleSlashCommands(input)
@@ -353,7 +371,7 @@ function addon:PopulateOptions()
 				general = {
 					order = 1,
 					type = "group",
-					name = "global",
+					name = "Config",
 					args = {
 						divider1 = {
 							order = 1,
@@ -417,8 +435,9 @@ function addon:PopulateOptions()
 						ignoreSoulbound = {
 							order = 10,
 							type  = "toggle",
-							name  = L["Ignore soulbound"],
-							desc  = L["Ignore soulbound and sell/destroy items marked as BoE"],
+							name  = L["Sell/destroy BoE grey gear"],
+							desc  = L
+								["Grey armor and weapons that can still be traded or sold to another player (Bind on Equip) are normally kept. Enable this to sell/destroy them too."],
 							get   = function() return addon.db.char.ignoreSoulbound end,
 							set   = function() addon.db.char.ignoreSoulbound = not addon.db.char.ignoreSoulbound end,
 						},
@@ -464,6 +483,21 @@ function addon:PopulateOptions()
 							usage = L["<Item Link>"],
 							get   = false,
 							set   = function(info, v) addon:Rem(v) end,
+						},
+						divider8 = {
+							order = 18,
+							type = "description",
+							name = "",
+						},
+						header2 = {
+							order = 19,
+							type = "header",
+							name = L["Exception list"],
+						},
+						exceptionList = {
+							order = 20,
+							type = "description",
+							name = function() return addon:GetExceptionListText() end,
 						},
 					}
 				}

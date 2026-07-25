@@ -33,13 +33,16 @@ L["This is failsafe mode. Will sell only 12 items in one pass. In case of an err
 "This is failsafe mode. Will sell only 12 items in one pass. In case of an error, all items can be bought back from vendor."
 L["Toggles the automatic selling of junk when the merchant window is opened."] =
 "Toggles the automatic selling of junk when the merchant window is opened."
-L["Ignore soulbound"] = "Ignore soulbound"
-L["Ignore soulbound and sell/destroy items marked as BoE"] = "Ignore soulbound and sell/destroy items marked as BoE"
+L["Sell/destroy unbound grey gear (BoE)"] = "Sell/destroy unbound grey gear (BoE)"
+L["Grey armor and weapons that can still be traded or sold to another player (Bind on Equip) are normally kept. Enable this to sell/destroy them too."] =
+"Grey armor and weapons that can still be traded or sold to another player (Bind on Equip) are normally kept. Enable this to sell/destroy them too."
 L["Available commands (/sj or /selljunk):"] = "Available commands (/sj or /selljunk):"
 L["Open the options panel."] = "Open the options panel."
 L["Destroy junk items instead of selling them."] = "Destroy junk items instead of selling them."
 L["Add an item to the exception list."] = "Add an item to the exception list."
 L["Remove an item from the exception list."] = "Remove an item from the exception list."
+L["Exception list"] = "Exception list"
+L["No exceptions."] = "No exceptions."
 
 
 if GetLocale() == "ptBR" then
