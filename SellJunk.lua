@@ -328,9 +328,19 @@ function addon:HandleSlashCommands(input)
 		else
 			self:Rem(arg2, true)
 		end
-	else
+	elseif arg1 == 'set' then
 		Settings.OpenToCategory(addon.optionsCategory)
+	else
+		self:PrintHelp()
 	end
+end
+
+function addon:PrintHelp()
+	self:Print(L["Available commands (/sj or /selljunk):"])
+	self:Print("  |cffffff00set|r - " .. L["Open the options panel."])
+	self:Print("  |cffffff00destroy|r [count] - " .. L["Destroy junk items instead of selling them."])
+	self:Print("  |cffffff00add|r <itemlink> - " .. L["Add an item to the exception list."])
+	self:Print("  |cffffff00rem/remove|r <itemlink> - " .. L["Remove an item from the exception list."])
 end
 
 function addon:PopulateOptions()
