@@ -2,7 +2,7 @@
 ## Title: SellJunk2
 ## Notes: Sells all junk in your inventory at once.
 ## Author: haytcho
-## Version: 5
+## Version: 5.0.1
 ## IconTexture: 133784
 ## Category: Inventory
 ## X-Renovator: github.com/hutcho
