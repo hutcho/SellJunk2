@@ -1,11 +1,12 @@
-## Interface: 120007
+## Interface: 120100
 ## Title: SellJunk2
-## Renovator: github.com/hutcho
 ## Notes: Sells all junk in your inventory at once.
-## Author: CrazyBenny of Stormrage-EU, FanUpdate by ImJayc2, TravisSpomer and Shyde
-## Version: 4
+## Author: haytcho
+## Version: 5
 ## IconTexture: 133784
 ## Category: Inventory
+## X-Renovator: github.com/hutcho
+## X-OriginalAuthors: CrazyBenny of Stormrage-EU, FanUpdate by ImJayc2, TravisSpomer and Shyde
 
 
 ## SavedVariables: SellJunkDB
